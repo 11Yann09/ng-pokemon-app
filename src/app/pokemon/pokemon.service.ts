@@ -10,14 +10,25 @@ export class PokemonService {
   getPokemonList(): Observable<Pokemon[]> {
     return this.http.get<Pokemon[]>("api/pokemons").pipe(
       tap((response) => this.log(response)),
-      catchError((error) => this.HandleError(error, []))
+      catchError((error) => this.handleError(error, []))
     );
   }
 
   getPokemonById(pokemonId: number): Observable<Pokemon | undefined> {
     return this.http.get<Pokemon>(`api/pokemons/${pokemonId}`).pipe(
       tap((response) => this.log(response)),
-      catchError((error) => this.HandleError(error, undefined))
+      catchError((error) => this.handleError(error, undefined))
+    );
+  }
+
+  searchPokemonList(term: string): Observable<Pokemon[]> {
+    // if (term.length <= 1) {
+    //   return of([]);
+    // }
+
+    return this.http.get<Pokemon[]>(`api/pokemons/?name=${term}`).pipe(
+      tap((response) => this.log(response)),
+      catchError((error) => this.handleError(error, []))
     );
   }
 
@@ -28,7 +39,7 @@ export class PokemonService {
 
     return this.http.post<Pokemon>("api/pokemons", pokemon, httpOptions).pipe(
       tap((response) => this.log(response)),
-      catchError((error) => this.HandleError(error, null))
+      catchError((error) => this.handleError(error, null))
     );
   }
 
@@ -39,14 +50,14 @@ export class PokemonService {
 
     return this.http.put("api/pokemons", pokemon, httpOptions).pipe(
       tap((response) => this.log(response)),
-      catchError((error) => this.HandleError(error, null))
+      catchError((error) => this.handleError(error, null))
     );
   }
 
   deletePokemonById(pokemonId: number): Observable<null> {
     return this.http.delete(`api/pokemons/${pokemonId}`).pipe(
       tap((response) => this.log(response)),
-      catchError((error) => this.HandleError(error, undefined))
+      catchError((error) => this.handleError(error, undefined))
     );
   }
 
@@ -54,7 +65,7 @@ export class PokemonService {
     console.log(response);
   }
 
-  private HandleError(error: Error, errorValue: any) {
+  private handleError(error: Error, errorValue: any) {
     console.log(error);
     return of(errorValue);
   }

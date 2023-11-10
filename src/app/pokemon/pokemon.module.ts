@@ -11,6 +11,8 @@ import { EditPokemonComponent } from "./edit-pokemon/edit-pokemon.component";
 import { ListPokemonComponent } from "./list-pokemon/list-pokemon.component";
 import { PokemonFormComponent } from "./pokemon-form/pokemon-form.component";
 import { FormsModule } from "@angular/forms";
+import { SearchPokemonComponent } from './search-pokemon/search-pokemon.component';
+import { LoaderComponent } from './loader/loader.component';
 
 const pokemonRoutes: Routes = [
   { path: "edit/pokemon/:id", component: EditPokemonComponent },
@@ -28,6 +30,8 @@ const pokemonRoutes: Routes = [
     PokemonFormComponent,
     EditPokemonComponent,
     AddPokemonComponent,
+    SearchPokemonComponent,
+    LoaderComponent,
   ],
   imports: [CommonModule, FormsModule, RouterModule.forChild(pokemonRoutes)],
   providers: [PokemonService],
